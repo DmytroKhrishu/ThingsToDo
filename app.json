@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ThingsToDo",
-    "slug": "ThingsToDo",
+    "slug": "thingstodo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "07f2b3b0-4135-4201-a686-2dd836a73b39"
+      }
+    },
+    "owner": "dmytrokhrishu"
   }
 }
