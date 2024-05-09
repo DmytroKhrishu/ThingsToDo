@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { TasksContext } from '../store/tasks-context';
+import Button from '../components/UI/Button';
 
 export default function TaskDetails({ taskId, onClose }) {
   const tasksCtx = useContext(TasksContext);
@@ -16,8 +17,8 @@ export default function TaskDetails({ taskId, onClose }) {
       <Text style={styles.text}>{task.task}</Text>
       <Text style={styles.text}>{task.description}</Text>
       <Text style={styles.text}>{task.date}</Text>
-      <Button title="Delete Task" onPress={onDeleteTask} />
-      <Button title="Close" onPress={onClose} />
+      <Button title="Task Complete" icon="checkmark" onPress={onDeleteTask} />
+      <Button title="Close" icon="close" onPress={onClose} />
     </View>
   );
 }

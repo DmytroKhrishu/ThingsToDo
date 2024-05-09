@@ -1,9 +1,9 @@
-import { Alert, Button, StyleSheet, Text, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { Alert, StyleSheet, View } from 'react-native';
 import Input from '../components/UI/Input';
 import { useContext, useState } from 'react';
 import { TasksContext } from '../store/tasks-context';
 import { useNavigation } from '@react-navigation/native';
+import Button from '../components/UI/Button';
 
 export default function AddTask() {
   const [task, onChangeTask] = useState('');
@@ -37,7 +37,7 @@ export default function AddTask() {
         value={description}
       />
       <Input label="Date:" onChange={onChangeDate} value={date} />
-      <Button title="Add Task" onPress={addTask} />
+      <Button title="Add Task" onPress={addTask} icon={"add"} />
     </View>
   );
 }

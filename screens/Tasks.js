@@ -30,6 +30,7 @@ export default function Tasks() {
         visible={modalIsVisible}
         animationType="slide"
         style={styles.modal}
+        onRequestClose={closeModal}
       >
         <TaskDetails taskId={clickedItemId} onClose={closeModal} />
       </Modal>
