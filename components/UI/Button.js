@@ -14,7 +14,7 @@ export default function Button({ title, icon, onPress }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    margin: 12,
+    margin: 8,
     backgroundColor: 'blue',
     overflow: 'hidden',
     borderRadius: 8,

@@ -1,15 +1,16 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TaskList from '../components/TasksOutput/TaskList';
 import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
 
-export default function Tasks() {
+export default function CompletedTasks() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [clickedItemId, setClickedItemId] = useState('');
+
   const tasksCtx = useContext(TasksContext);
   const tasks = tasksCtx.tasks;
-  const uncompletedTasks =
-    tasks && tasks.filter((task) => task.isCompleted !== true);
+  const completedTasks =
+    tasks && tasks.filter((task) => task.isCompleted === true);
 
   function openModal() {
     setModalIsVisible(true);
@@ -26,10 +27,14 @@ export default function Tasks() {
 
   return (
     <>
-      <DetailsModal taskId={clickedItemId} onClose={closeModal} isVisible={modalIsVisible} />
-      <TaskList tasks={uncompletedTasks} onItemClick={onItemClick} />
+      <DetailsModal
+        taskId={clickedItemId}
+        onClose={closeModal}
+        isVisible={modalIsVisible}
+      />
+      {completedTasks && (
+        <TaskList tasks={completedTasks} onItemClick={onItemClick} />
+      )}
     </>
   );
 }
-
-

@@ -3,12 +3,14 @@ import Input from '../components/UI/Input';
 import { useContext, useState } from 'react';
 import { TasksContext } from '../store/tasks-context';
 import { useNavigation } from '@react-navigation/native';
+
 import Button from '../components/UI/Button';
+import DateInput from '../components/UI/DateInput';
 
 export default function AddTask() {
   const [task, onChangeTask] = useState('');
   const [description, onChangeDescription] = useState('');
-  const [date, onChangeDate] = useState('');
+  const [date, onChangeDate] = useState(new Date());
 
   const navigation = useNavigation();
 
@@ -36,7 +38,7 @@ export default function AddTask() {
         onChange={onChangeDescription}
         value={description}
       />
-      <Input label="Date:" onChange={onChangeDate} value={date} />
+      <DateInput onChangeDate={onChangeDate} />
       <Button title="Add Task" onPress={addTask} icon={"add"} />
     </View>
   );

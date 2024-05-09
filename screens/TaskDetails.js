@@ -7,17 +7,41 @@ export default function TaskDetails({ taskId, onClose }) {
   const tasksCtx = useContext(TasksContext);
   const task = tasksCtx.tasks.find((task) => task.id === taskId);
 
-  function onDeleteTask(){
-    tasksCtx.deleteTask(taskId)
+  const taskIsComplete = task.isCompleted;
+
+  function onDeleteTask() {
+    tasksCtx.deleteTask(taskId);
+    onClose();
+  }
+
+  function onCompleteTask() {
+    tasksCtx.completeTask(taskId);
+    onClose();
+  }
+  function onUncompleteTask() {
+    tasksCtx.uncompleteTask(taskId);
     onClose();
   }
 
   return (
-    <View style={styles.detailsContainer}> 
+    <View style={styles.detailsContainer}>
       <Text style={styles.text}>{task.task}</Text>
       <Text style={styles.text}>{task.description}</Text>
       <Text style={styles.text}>{task.date}</Text>
-      <Button title="Task Complete" icon="checkmark" onPress={onDeleteTask} />
+      {taskIsComplete ? (
+        <Button
+          title="Un-complete task"
+          icon="return-down-back"
+          onPress={onUncompleteTask}
+        />
+      ) : (
+        <Button
+          title="Task Complete"
+          icon="checkmark"
+          onPress={onCompleteTask}
+        />
+      )}
+      <Button title="Delete Task" icon="trash-bin" onPress={onDeleteTask} />
       <Button title="Close" icon="close" onPress={onClose} />
     </View>
   );
@@ -30,11 +54,11 @@ const styles = StyleSheet.create({
     marginTop: 150,
     backgroundColor: 'white',
     elevation: 8,
-    borderRadius: 8
+    borderRadius: 8,
   },
   text: {
     textAlign: 'center',
     fontSize: 20,
-    margin: 5
-  }
-})
+    margin: 5,
+  },
+});
