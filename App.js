@@ -6,6 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Tasks from './screens/Tasks';
 import AddTask from './screens/AddTask';
+import TasksContextProvider from './store/tasks-context';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -14,23 +15,25 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{}}>
-          <Stack.Screen
-            name="Tasks"
-            component={Tasks}
-            options={({ navigation }) => ({
-              headerRight: () => (
-                <Button
-                  title="+"
-                  onPress={() => navigation.navigate('AddTask')}
-                />
-              ),
-            })}
-          />
-          <Stack.Screen name="AddTask" component={AddTask} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <TasksContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{}}>
+            <Stack.Screen
+              name="Tasks"
+              component={Tasks}
+              options={({ navigation }) => ({
+                headerRight: () => (
+                  <Button
+                    title="+"
+                    onPress={() => navigation.navigate('AddTask')}
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen name="AddTask" component={AddTask} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </TasksContextProvider>
     </>
   );
 }
