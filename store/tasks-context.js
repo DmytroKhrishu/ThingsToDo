@@ -64,7 +64,12 @@ export default function TasksContextProvider({ children }) {
   function updateTask(id, task) {
     setTasks((prev) => {
       const editedTaskIndex = prev.findIndex((item) => item.id === id);
-      prev[editedTaskIndex] = task;
+      prev[editedTaskIndex] = {
+        id: prev[editedTaskIndex].id,
+        isCompleted: prev[editedTaskIndex].isCompleted,
+        ...task,
+      };
+      return [...prev];
     });
   }
 

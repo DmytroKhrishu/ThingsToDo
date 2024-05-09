@@ -13,6 +13,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Button from './components/UI/Button';
 import { useState } from 'react';
 import CompletedTasks from './screens/CompletedTasks';
+import EditTask from './screens/EditTask';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -57,7 +58,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
       <TasksContextProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{}}>
@@ -70,6 +71,11 @@ export default function App() {
               name="AddTask"
               component={AddTask}
               options={{ title: 'Add Task' }}
+            />
+            <Stack.Screen
+              name="EditTask"
+              component={EditTask}
+              options={{ title: 'Edit Task' }}
             />
           </Stack.Navigator>
         </NavigationContainer>

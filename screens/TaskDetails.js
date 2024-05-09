@@ -2,12 +2,15 @@ import { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TasksContext } from '../store/tasks-context';
 import Button from '../components/UI/Button';
+import { useNavigation } from '@react-navigation/native';
 
 export default function TaskDetails({ taskId, onClose }) {
   const tasksCtx = useContext(TasksContext);
   const task = tasksCtx.tasks.find((task) => task.id === taskId);
 
   const taskIsComplete = task.isCompleted;
+
+  const navigation = useNavigation();
 
   function onDeleteTask() {
     tasksCtx.deleteTask(taskId);
@@ -18,8 +21,14 @@ export default function TaskDetails({ taskId, onClose }) {
     tasksCtx.completeTask(taskId);
     onClose();
   }
+
   function onUncompleteTask() {
     tasksCtx.uncompleteTask(taskId);
+    onClose();
+  }
+
+  function onEditTask() {
+    navigation.navigate('EditTask', { id: taskId });
     onClose();
   }
 
@@ -41,6 +50,7 @@ export default function TaskDetails({ taskId, onClose }) {
           onPress={onCompleteTask}
         />
       )}
+      <Button title="Edit Task" icon="pencil" onPress={onEditTask} />
       <Button title="Delete Task" icon="trash-bin" onPress={onDeleteTask} />
       <Button title="Close" icon="close" onPress={onClose} />
     </View>

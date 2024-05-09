@@ -1,9 +1,7 @@
-import { Modal, StyleSheet } from "react-native";
-import TaskDetails from "../screens/TaskDetails";
+import { Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import TaskDetails from '../screens/TaskDetails';
 
-export default function DetailsModal({taskId, onClose, isVisible}) {
-  
-
+export default function DetailsModal({ taskId, onClose, isVisible }) {
   return (
     <Modal
       transparent
@@ -12,14 +10,15 @@ export default function DetailsModal({taskId, onClose, isVisible}) {
       style={styles.modal}
       onRequestClose={onClose}
     >
-      <TaskDetails taskId={taskId} onClose={onClose} />
+      <TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={onClose}>
+        <TaskDetails taskId={taskId} onClose={onClose} />
+      </TouchableOpacity>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   modal: {
-    flex: 1,
     backgroundColor: 'white',
     marginTop: 35,
     padding: 20,
