@@ -14,7 +14,7 @@ export default function EditTask() {
   const tasksCtx = useContext(TasksContext);
 
   function editTask(task, description, date) {
-    if (task && description && date) {
+    if (task.trim() !== '' && description.trim() !== '' && date) {
       const taskItem = {
         task: task,
         description: description,

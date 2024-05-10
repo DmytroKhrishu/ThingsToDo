@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import { storeTask } from '../util/http';
 
 export const DUMMY_TASKS = [
   {
@@ -36,32 +37,12 @@ export const DUMMY_TASKS = [
     description: 'lalala',
     date: new Date().toDateString(),
   },
-  {
-    id: 't6',
-    isCompleted: false,
-    task: 'Dummy completed Task',
-    description: 'lalala',
-    date: new Date().toDateString(),
-  },
-  {
-    id: 't7',
-    isCompleted: false,
-    task: 'Dummy completed Task',
-    description: 'lalala',
-    date: new Date().toDateString(),
-  },
-  {
-    id: 't8',
-    isCompleted: false,
-    task: 'Dummy completed Task',
-    description: 'lalala',
-    date: new Date().toDateString(),
-  },
 ];
 
 export const TasksContext = createContext({
   tasks: [],
   addTask: ({ task, description, date }) => {},
+  setFetchedTasks: (tasks) => {},
   completeTask: (id) => {},
   uncompleteTask: (id) => {},
   deleteTask: (id) => {},
@@ -71,9 +52,12 @@ export const TasksContext = createContext({
 export default function TasksContextProvider({ children }) {
   const [tasks, setTasks] = useState(DUMMY_TASKS);
 
-  function addTask(task) {
-    const taskId = (Math.random() * 10).toFixed(2).toString();
-    setTasks((prev) => [...prev, { id: taskId, isCompleted: false, ...task }]);
+  async function addTask(task) {
+    setTasks((prev) => [...prev, { ...task }]);
+  }
+
+  function setFetchedTasks(tasks) {
+    setTasks(tasks)
   }
 
   function completeTask(id) {
@@ -111,6 +95,7 @@ export default function TasksContextProvider({ children }) {
   const value = {
     tasks: tasks,
     addTask,
+    setFetchedTasks,
     completeTask,
     uncompleteTask,
     deleteTask,
