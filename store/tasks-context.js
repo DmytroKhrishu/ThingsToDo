@@ -22,6 +22,41 @@ export const DUMMY_TASKS = [
     description: 'lalala',
     date: new Date().toDateString(),
   },
+  {
+    id: 't4',
+    isCompleted: false,
+    task: 'Dummy completed Task',
+    description: 'lalala',
+    date: new Date().toDateString(),
+  },
+  {
+    id: 't5',
+    isCompleted: false,
+    task: 'Dummy completed Task',
+    description: 'lalala',
+    date: new Date().toDateString(),
+  },
+  {
+    id: 't6',
+    isCompleted: false,
+    task: 'Dummy completed Task',
+    description: 'lalala',
+    date: new Date().toDateString(),
+  },
+  {
+    id: 't7',
+    isCompleted: false,
+    task: 'Dummy completed Task',
+    description: 'lalala',
+    date: new Date().toDateString(),
+  },
+  {
+    id: 't8',
+    isCompleted: false,
+    task: 'Dummy completed Task',
+    description: 'lalala',
+    date: new Date().toDateString(),
+  },
 ];
 
 export const TasksContext = createContext({

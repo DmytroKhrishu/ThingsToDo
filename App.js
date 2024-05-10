@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Tasks from './screens/Tasks';
@@ -11,9 +10,9 @@ import TasksContextProvider from './store/tasks-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Button from './components/UI/Button';
-import { useState } from 'react';
 import CompletedTasks from './screens/CompletedTasks';
 import EditTask from './screens/EditTask';
+import { Colors } from './const/colors';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,12 +21,20 @@ function TasksTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
+        tabBarStyle: {
+          backgroundColor: Colors.tabBarBackground,
+          height: 55,
+          paddingBottom: 3,
+        },
+        tabBarActiveTintColor: 'white',
+        tabBarLabelStyle: { fontSize: 14 },
+        headerStyle: {backgroundColor: Colors.headerBackground},
+        headerTintColor: "white",
         headerRight: () => (
           <Button
             icon="add"
             onPress={() => {
               navigation.navigate('AddTask');
-              // setAddingTask(false);
             }}
           />
         ),
@@ -38,7 +45,9 @@ function TasksTabs() {
         component={Tasks}
         options={{
           title: 'Tasks',
-          tabBarIcon: () => <Ionicons name="list" size={20} />,
+          tabBarIcon: ( {size, color}) => (
+            <Ionicons name="list" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -46,7 +55,9 @@ function TasksTabs() {
         component={CompletedTasks}
         options={{
           title: 'Completed Tasks',
-          tabBarIcon: () => <Ionicons name="checkmark" size={20} />,
+          tabBarIcon: ({size, color}) => (
+            <Ionicons name="checkmark" size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>
@@ -54,14 +65,14 @@ function TasksTabs() {
 }
 
 export default function App() {
-  const [addingTask, setAddingTask] = useState(true);
-
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <TasksContextProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{}}>
+          <Stack.Navigator screenOptions={{
+             headerStyle: {backgroundColor: Colors.headerBackground}, headerTintColor: 'white'
+          }}>
             <Stack.Screen
               name="Tasks"
               component={TasksTabs}
@@ -70,7 +81,7 @@ export default function App() {
             <Stack.Screen
               name="AddTask"
               component={AddTask}
-              options={{ title: 'Add Task' }}
+              options={{ title: 'Add Task', }}
             />
             <Stack.Screen
               name="EditTask"
@@ -83,12 +94,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

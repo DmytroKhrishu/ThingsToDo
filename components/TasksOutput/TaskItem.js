@@ -1,12 +1,19 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Colors } from '../../const/colors';
 
 export default function TaskItem({ task, onClick }) {
   return (
     <View style={styles.itemContainer}>
-      <Pressable android_ripple={{color: 'grey'}} onPress={onClick} style={styles.item}>
-        <Text style={styles.itemText}>{task.task}</Text>
-        <Text style={styles.itemText}>{task.description}</Text>
-        <Text style={styles.itemText}>{task.date}</Text>
+      <Pressable
+        android_ripple={{ color: 'grey' }}
+        onPress={onClick}
+        style={styles.item}
+      >
+        <Text style={styles.title}>{task.task}</Text>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.text}>{task.description}</Text>
+          <Text style={styles.text}>{task.date}</Text>
+        </View>
       </Pressable>
     </View>
   );
@@ -14,18 +21,29 @@ export default function TaskItem({ task, onClick }) {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    margin: 10,
+    margin: 8,
+    marginHorizontal: 15,
     borderRadius: 12,
     elevation: 6,
-    backgroundColor: 'white',
-    overflow: 'hidden'
+    backgroundColor: Colors.itemBackground,
+    overflow: 'hidden',
   },
   item: {
-    padding: 10,
+    padding: 8,
   },
-  itemText: {
-    textAlign: 'center',
+  title: {
     textAlignVertical: 'center',
-    margin: 5
+    padding: 5,
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold'
   },
+  detailsContainer: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    paddingHorizontal: 8
+  },
+  text: {
+    color: "white"
+  }
 });

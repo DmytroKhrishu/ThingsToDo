@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import TaskList from '../components/TasksOutput/TaskList';
 import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
+import { Text } from 'react-native';
 
 export default function Tasks() {
   const [modalIsVisible, setModalIsVisible] = useState(false);

@@ -4,6 +4,7 @@ import DateInput from './UI/DateInput';
 import Button from './UI/Button';
 import { useContext, useState } from 'react';
 import { TasksContext } from '../store/tasks-context';
+import { Colors } from '../const/colors';
 
 export default function TaskForm({ onSubmitTask, mode, taskId }) {
   const tasksCtx = useContext(TasksContext);
@@ -46,6 +47,8 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
 
 const styles = StyleSheet.create({
   inputsContainer: {
+    flex: 1,
     padding: 20,
+    backgroundColor: Colors.mainBackground
   },
 });

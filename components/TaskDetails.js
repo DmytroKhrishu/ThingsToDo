@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TasksContext } from '../store/tasks-context';
-import Button from '../components/UI/Button';
+import Button from './UI/Button';
 import { useNavigation } from '@react-navigation/native';
+import { Colors } from '../const/colors';
 
 export default function TaskDetails({ taskId, onClose }) {
   const tasksCtx = useContext(TasksContext);
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     padding: 15,
     margin: 20,
     marginTop: 150,
-    backgroundColor: 'white',
+    backgroundColor: Colors.modalBackground,
     elevation: 8,
     borderRadius: 8,
   },
@@ -70,5 +71,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     margin: 5,
+    color: "white"
   },
 });

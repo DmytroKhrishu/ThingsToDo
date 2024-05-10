@@ -1,5 +1,5 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 import { useState } from 'react';
 
@@ -23,10 +23,10 @@ export default function DateInput({ onChangeDate, existingDate }) {
 
   return (
     <View>
-      <Button title="Select Date" onPress={showDatePicker} icon="calendar" />
       {(date || displayedDate) && (
-        <Text>Selected date: {displayedDate}</Text>
+        <Text style={styles.text}>Selected date: {displayedDate}</Text>
       )}
+      <Button title="Select Date" onPress={showDatePicker} icon="calendar" />
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -39,3 +39,10 @@ export default function DateInput({ onChangeDate, existingDate }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 16,
+    color: "white"
+  }
+})
