@@ -10,18 +10,18 @@ export default function CompletedTasks() {
 
   const tasksCtx = useContext(TasksContext);
   const tasks = tasksCtx.tasks;
-
+  const isFetching = tasksCtx.isFetching;
 
   useEffect(() => {
     async function getTasks() {
-      const fetchedTasks = await fetchTasks();
-      tasksCtx.setFetchedTasks(fetchedTasks);
-      console.log('Get Tasks');
-      console.log(fetchedTasks);
+      tasksCtx.setFetchedTasks();
     }
     getTasks();
   }, []);
 
+  if (isFetching) {
+    return <ActivityIndicator />;
+  }
 
   const completedTasks =
     tasks && tasks.filter((task) => task.isCompleted === true);
@@ -30,8 +30,9 @@ export default function CompletedTasks() {
     setModalIsVisible(true);
   }
 
-  function closeModal() {
+  async function closeModal() {
     setModalIsVisible(false);
+    tasksCtx.setFetchedTasks();
   }
 
   function onItemClick(id) {

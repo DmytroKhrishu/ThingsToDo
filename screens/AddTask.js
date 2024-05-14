@@ -11,19 +11,9 @@ export default function AddTask() {
 
   const tasksCtx = useContext(TasksContext);
 
-  async function addTask(task, description, date) {
-    if (task.trim() !== '' && description.trim() !== '' && date) {
-      const taskItem = {
-        task: task,
-        description: description,
-        date: new Date(date).toDateString(),
-      };
-      const taskId = await storeTask({ isCompleted: false, ...taskItem })
-      tasksCtx.addTask({id: taskId, ...taskItem});
-      navigation.navigate('Tasks');
-    } else {
-      Alert.alert('Oops', 'Please fill out all fields');
-    }
+  function addTask(task, description, date) {
+    tasksCtx.addTask({ task: task, description: description, date: date });
+    navigation.navigate('Tasks');
   }
 
   return <TaskForm onSubmitTask={addTask} mode="add" />;

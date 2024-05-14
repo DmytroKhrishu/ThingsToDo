@@ -18,9 +18,10 @@ export default function EditTask() {
       const taskItem = {
         task: task,
         description: description,
-        date: new Date(date).toDateString(),
+        date: date.toDateString(),
       };
       tasksCtx.updateTask(id, taskItem);
+      tasksCtx.setFetchedTasks();
       navigation.navigate('Tasks');
     } else {
       Alert.alert('Oops', 'Please fill out all fields');

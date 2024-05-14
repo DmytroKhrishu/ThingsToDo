@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import TaskList from '../components/TasksOutput/TaskList';
 import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
-import { Text } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native';
 import { fetchTasks } from '../util/http';
 
 export default function Tasks() {
@@ -11,16 +11,18 @@ export default function Tasks() {
   const tasksCtx = useContext(TasksContext);
 
   const tasks = tasksCtx.tasks;
+  const isFetching = tasksCtx.isFetching;
 
   useEffect(() => {
     async function getTasks() {
-      const fetchedTasks = await fetchTasks();
-      tasksCtx.setFetchedTasks(fetchedTasks);
-      console.log('Get Tasks');
-      console.log(fetchedTasks);
+       tasksCtx.setFetchedTasks();
     }
     getTasks();
   }, []);
+
+  if(isFetching){
+    return <ActivityIndicator />
+  }
 
   const uncompletedTasks =
     tasks && tasks.filter((task) => task.isCompleted !== true);
@@ -29,8 +31,9 @@ export default function Tasks() {
     setModalIsVisible(true);
   }
 
-  function closeModal() {
+  async function closeModal() {
     setModalIsVisible(false);
+    tasksCtx.setFetchedTasks();
   }
 
   function onItemClick(id) {

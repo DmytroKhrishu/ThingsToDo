@@ -10,7 +10,7 @@ export default function DateInput({ onChangeDate, existingDate }) {
 
   function onChange(event, selectedDate) {
     const currentDate = selectedDate;
-    console.log(currentDate)
+    // console.log(currentDate)
     setShow(false);
     setDate(currentDate);
     onChangeDate(currentDate);
