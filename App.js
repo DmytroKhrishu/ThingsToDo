@@ -1,5 +1,9 @@
 import 'react-native-gesture-handler';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,15 +11,117 @@ import Tasks from './screens/Tasks';
 import AddTask from './screens/AddTask';
 import TasksContextProvider from './store/tasks-context';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Button from './components/UI/Button';
 import CompletedTasks from './screens/CompletedTasks';
 import EditTask from './screens/EditTask';
 import { Colors } from './const/colors';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
+import { useEffect, useState, useContext } from 'react';
+import LoadingOverlay from './components/UI/LoadingOverlay';
+import LoginScreen from './screens/LoginScreen';
+import SignupScreen from './screens/SignupScreen';
+import {
+  DrawerContentScrollView,
+  DrawerItem,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function AuthStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.headerBackground },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.mainBackground },
+      }}
+    >
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function CustomDrawerContent() {
+  const authCtx = useContext(AuthContext);
+
+  return (
+    <DrawerContentScrollView>
+      {/* <DrawerItem label="User" /> */}
+      <DrawerItem
+        label="Logout"
+        icon={({ color, size }) => (
+          <Ionicons name="exit" color={color} size={size} />
+        )}
+        onPress={authCtx.logout}
+        inactiveTintColor="white"
+      />
+    </DrawerContentScrollView>
+  );
+}
+
+function AuthenticatedStack() {
+  return (
+    <Drawer.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: Colors.headerBackground },
+        headerTintColor: 'white',
+        headerRight: () => (
+          <Button
+            icon="add"
+            onPress={() => {
+              navigation.navigate('AddTask');
+            }}
+          />
+        ),
+        drawerStyle: { backgroundColor: Colors.modalBackground },
+      })}
+      drawerContent={() => <CustomDrawerContent />}
+    >
+      <Drawer.Screen
+        name="TasksStack"
+        component={TasksStack}
+        options={({route}) => ({
+          title: 'ThingsToDo',
+          headerShown: route.name === 'AddTask' ? false : true,
+        })}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+function TasksStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.headerBackground },
+        headerTintColor: 'white',
+      }}
+    >
+      <Stack.Screen
+        name="Tasks"
+        component={TasksTabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddTask"
+        component={AddTask}
+        options={{ title: 'Add Task' }}
+      />
+      <Stack.Screen
+        name="EditTask"
+        component={EditTask}
+        options={{ title: 'Edit Task' }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function TasksTabs() {
   return (
@@ -28,24 +134,16 @@ function TasksTabs() {
         },
         tabBarActiveTintColor: 'white',
         tabBarLabelStyle: { fontSize: 14 },
-        headerStyle: {backgroundColor: Colors.headerBackground},
-        headerTintColor: "white",
-        headerRight: () => (
-          <Button
-            icon="add"
-            onPress={() => {
-              navigation.navigate('AddTask');
-            }}
-          />
-        ),
+        headerStyle: { backgroundColor: Colors.headerBackground },
+        headerTintColor: 'white',
       })}
     >
       <Tab.Screen
         name="AllTasks"
         component={Tasks}
         options={{
-          title: 'Tasks',
-          tabBarIcon: ( {size, color}) => (
+          title: 'Tasks To Do',
+          tabBarIcon: ({ size, color }) => (
             <Ionicons name="list" size={size} color={color} />
           ),
         }}
@@ -55,7 +153,7 @@ function TasksTabs() {
         component={CompletedTasks}
         options={{
           title: 'Completed Tasks',
-          tabBarIcon: ({size, color}) => (
+          tabBarIcon: ({ size, color }) => (
             <Ionicons name="checkmark" size={size} color={color} />
           ),
         }}
@@ -64,33 +162,50 @@ function TasksTabs() {
   );
 }
 
+function Navigation() {
+  const authCtx = useContext(AuthContext);
+
+  return (
+    <NavigationContainer>
+      {!authCtx.isAuthenticated && <AuthStack />}
+      {authCtx.isAuthenticated && <AuthenticatedStack />}
+    </NavigationContainer>
+  );
+}
+
+function Root() {
+  const [isTryingLogin, setIsTryingLogin] = useState(true);
+  const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    async function fetchToken() {
+      const storedToken = await AsyncStorage.getItem('token');
+      if (storedToken) {
+        authCtx.authenticate(storedToken);
+      }
+
+      setIsTryingLogin(false);
+    }
+
+    fetchToken();
+  }, []);
+
+  if (isTryingLogin) {
+    return <LoadingOverlay />;
+  }
+
+  return <Navigation />;
+}
+
 export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <TasksContextProvider>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{
-             headerStyle: {backgroundColor: Colors.headerBackground}, headerTintColor: 'white'
-          }}>
-            <Stack.Screen
-              name="Tasks"
-              component={TasksTabs}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="AddTask"
-              component={AddTask}
-              options={{ title: 'Add Task', }}
-            />
-            <Stack.Screen
-              name="EditTask"
-              component={EditTask}
-              options={{ title: 'Edit Task' }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </TasksContextProvider>
+      <AuthContextProvider>
+        <TasksContextProvider>
+          <Root />
+        </TasksContextProvider>
+      </AuthContextProvider>
     </>
   );
 }

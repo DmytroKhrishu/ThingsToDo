@@ -1,11 +1,12 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import {
   deleteTaskBackend,
   fetchTasks,
   storeTask,
   updateTaskBackend,
 } from '../util/http';
-
+import { Alert } from 'react-native';
+import { AuthContext } from './auth-context';
 
 export const TasksContext = createContext({
   tasks: [],
@@ -15,11 +16,14 @@ export const TasksContext = createContext({
   uncompleteTask: (id) => {},
   deleteTask: (id) => {},
   updateTask: (id, { task, description, date }) => {},
+  clearContext: () => {},
 });
 
 export default function TasksContextProvider({ children }) {
   const [tasks, setTasks] = useState([]);
-  const [isFetching, setIsFetching] = useState(false)
+  const [isFetching, setIsFetching] = useState(false);
+
+  const authCtx = useContext(AuthContext);
 
   async function addTask(task) {
     if (
@@ -29,10 +33,15 @@ export default function TasksContextProvider({ children }) {
     ) {
       const taskItem = {
         task: task.task,
+        isCompleted: false,
         description: task.description,
         date: task.date.toDateString(),
       };
-      const taskId = await storeTask({ isCompleted: false, ...taskItem });
+      const taskId = await storeTask(
+        { ...taskItem },
+        authCtx.token,
+        authCtx.userId
+      );
       setTasks((prev) => [...prev, { id: taskId, ...taskItem }]);
     } else {
       Alert.alert('Oops', 'Please fill out all fields');
@@ -41,12 +50,9 @@ export default function TasksContextProvider({ children }) {
 
   async function setFetchedTasks() {
     try {
-      setIsFetching(true)
-      const fetchedTasks = await fetchTasks();
+      setIsFetching(true);
+      const fetchedTasks = await fetchTasks(authCtx.token, authCtx.userId);
       setTasks(fetchedTasks);
-      // console.log('Get Tasks');
-      // // console.log(fetchedTasks);
-      // console.log(tasks);
       setIsFetching(false);
     } catch (error) {
       console.log(error);
@@ -58,7 +64,7 @@ export default function TasksContextProvider({ children }) {
     try {
       const editedTask = tasks.find((task) => task.id === id);
       editedTask.isCompleted = true;
-      updateTaskBackend(id, {...editedTask});
+      updateTaskBackend(id, { ...editedTask }, authCtx.token, authCtx.userId);
       await setFetchedTasks();
     } catch (error) {
       console.log(error);
@@ -69,7 +75,7 @@ export default function TasksContextProvider({ children }) {
     try {
       const editedTask = tasks.find((task) => task.id === id);
       editedTask.isCompleted = false;
-      updateTaskBackend(id, {...editedTask});
+      updateTaskBackend(id, { ...editedTask }, authCtx.token, authCtx.userId);
       await setFetchedTasks();
     } catch (error) {
       console.log(error);
@@ -78,7 +84,7 @@ export default function TasksContextProvider({ children }) {
 
   async function deleteTask(id) {
     try {
-      deleteTaskBackend(id);
+      deleteTaskBackend(id, authCtx.token);
       await setFetchedTasks();
     } catch (error) {
       console.log(error);
@@ -88,11 +94,23 @@ export default function TasksContextProvider({ children }) {
   async function updateTask(id, task) {
     try {
       const editedTask = tasks.find((task) => task.id === id);
-      updateTaskBackend(id, { isCompleted: editedTask.isCompleted, ...task });
+      updateTaskBackend(
+        id,
+        {
+          isCompleted: editedTask.isCompleted,
+          ...task,
+        },
+        authCtx.token,
+        authCtx.userId
+      );
       await setFetchedTasks();
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function clearContext() {
+    setTasks([]);
   }
 
   const value = {
@@ -104,6 +122,7 @@ export default function TasksContextProvider({ children }) {
     uncompleteTask,
     deleteTask,
     updateTask,
+    clearContext,
   };
 
   return (

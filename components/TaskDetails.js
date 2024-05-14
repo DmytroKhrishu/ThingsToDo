@@ -15,21 +15,25 @@ export default function TaskDetails({ taskId, onClose }) {
 
   function onDeleteTask() {
     tasksCtx.deleteTask(taskId);
+    tasksCtx.setFetchedTasks()
     onClose();
   }
 
   function onCompleteTask() {
     tasksCtx.completeTask(taskId);
+    tasksCtx.setFetchedTasks()
     onClose();
   }
 
   function onUncompleteTask() {
     tasksCtx.uncompleteTask(taskId);
+    tasksCtx.setFetchedTasks()
     onClose();
   }
 
   function onEditTask() {
     navigation.navigate('EditTask', { id: taskId });
+    tasksCtx.setFetchedTasks()
     onClose();
   }
 

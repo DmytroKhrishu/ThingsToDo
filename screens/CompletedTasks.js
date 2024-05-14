@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import TaskList from '../components/TasksOutput/TaskList';
 import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
-import { fetchTasks } from '../util/http';
+import LoadingOverlay from '../components/UI/LoadingOverlay';
 
 export default function CompletedTasks() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -20,7 +20,7 @@ export default function CompletedTasks() {
   }, []);
 
   if (isFetching) {
-    return <ActivityIndicator />;
+    return <LoadingOverlay />
   }
 
   const completedTasks =
@@ -32,7 +32,6 @@ export default function CompletedTasks() {
 
   async function closeModal() {
     setModalIsVisible(false);
-    tasksCtx.setFetchedTasks();
   }
 
   function onItemClick(id) {

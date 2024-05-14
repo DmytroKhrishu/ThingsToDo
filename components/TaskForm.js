@@ -33,10 +33,10 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
 
   return (
     <View style={styles.inputsContainer}>
-      <Input label="Task:" onChange={onChangeTask} value={task} />
+      <Input label="Task:" onUpdateValue={onChangeTask} value={task} />
       <Input
         label="Description:"
-        onChange={onChangeDescription}
+        onUpdateValue={onChangeDescription}
         value={description}
       />
       <DateInput onChangeDate={onChangeDate} existingDate={taskId ? editedTask.date : null} />

@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import TaskList from '../components/TasksOutput/TaskList';
 import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
-import { ActivityIndicator, Text } from 'react-native';
-import { fetchTasks } from '../util/http';
+import { Text } from 'react-native';
+import LoadingOverlay from '../components/UI/LoadingOverlay';
 
 export default function Tasks() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -21,7 +21,7 @@ export default function Tasks() {
   }, []);
 
   if(isFetching){
-    return <ActivityIndicator />
+    return <LoadingOverlay />
   }
 
   const uncompletedTasks =
@@ -33,7 +33,7 @@ export default function Tasks() {
 
   async function closeModal() {
     setModalIsVisible(false);
-    tasksCtx.setFetchedTasks();
+    // tasksCtx.setFetchedTasks();
   }
 
   function onItemClick(id) {
