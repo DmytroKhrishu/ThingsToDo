@@ -1,6 +1,5 @@
 import axios from 'axios';
-const BACKEND_URL =
-  'https://thingstodo-2be60-default-rtdb.europe-west1.firebasedatabase.app/';
+import { BACKEND_URL } from '../private';
 
 export async function storeTask(taskData, token, userId) {
   const response = await axios.post(BACKEND_URL + '/tasks.json?auth=' + token, {

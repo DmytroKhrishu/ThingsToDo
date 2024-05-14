@@ -50,10 +50,14 @@ function AuthStack() {
 
 function CustomDrawerContent() {
   const authCtx = useContext(AuthContext);
-
+  const userEmail = authCtx.userEmail;
   return (
     <DrawerContentScrollView>
-      {/* <DrawerItem label="User" /> */}
+      <DrawerItem
+        label={userEmail ? userEmail : "User"}
+        onPress={() => {}}
+        inactiveTintColor="white"
+      />
       <DrawerItem
         label="Logout"
         icon={({ color, size }) => (
@@ -67,6 +71,7 @@ function CustomDrawerContent() {
 }
 
 function AuthenticatedStack() {
+
   return (
     <Drawer.Navigator
       screenOptions={({ navigation }) => ({
@@ -87,9 +92,9 @@ function AuthenticatedStack() {
       <Drawer.Screen
         name="TasksStack"
         component={TasksStack}
-        options={({route}) => ({
+        options={({ route }) => ({
           title: 'ThingsToDo',
-          headerShown: route.name === 'AddTask' ? false : true,
+          headerShown: true,
         })}
       />
     </Drawer.Navigator>
@@ -112,7 +117,7 @@ function TasksStack() {
       <Stack.Screen
         name="AddTask"
         component={AddTask}
-        options={{ title: 'Add Task' }}
+        options={{ title: 'Add Task',  }}
       />
       <Stack.Screen
         name="EditTask"
