@@ -14,7 +14,7 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
   const [description, onChangeDescription] = useState(
     taskId ? editedTask.description : ''
   );
-  const [date, onChangeDate] = useState(new Date());
+  const [date, onChangeDate] = useState(taskId ? editedTask.date : new Date());
 
   function onSubmit() {
     onSubmitTask(task, description, date);

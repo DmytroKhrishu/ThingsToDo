@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BACKEND_URL } from '../private';
+import { BACKEND_URL } from '../const/private.js';
 
 export async function storeTask(taskData, token, userId) {
   const response = await axios.post(BACKEND_URL + '/tasks.json?auth=' + token, {
@@ -38,7 +38,7 @@ export function updateTaskBackend(id, taskData, token, userId) {
     description: taskData.description,
     isCompleted: taskData.isCompleted,  
     userId: userId,
-    date: new Date(taskData.date).toDateString(),
+    date: taskData.date,
   };
   return axios.put(BACKEND_URL + `/tasks/${id}.json?auth=` + token, {
     ...taskObj,

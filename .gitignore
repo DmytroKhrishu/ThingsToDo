@@ -34,4 +34,4 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-private.js
+const/private.js

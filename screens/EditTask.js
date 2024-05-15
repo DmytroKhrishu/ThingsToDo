@@ -18,7 +18,7 @@ export default function EditTask() {
       const taskItem = {
         task: task,
         description: description,
-        date: date.toDateString(),
+        date: date,
       };
       tasksCtx.updateTask(id, taskItem);
       tasksCtx.setFetchedTasks();
