@@ -10,12 +10,12 @@ import { AuthContext } from './auth-context';
 
 export const TasksContext = createContext({
   tasks: [],
-  addTask: ({ task, description, date }) => {},
+  addTask: ({ task, description, date, time }) => {},
   setFetchedTasks: (tasks) => {},
   completeTask: (id) => {},
   uncompleteTask: (id) => {},
   deleteTask: (id) => {},
-  updateTask: (id, { task, description, date }) => {},
+  updateTask: (id, { task, description, date, time }) => {},
   clearContext: () => {},
 });
 
@@ -29,13 +29,14 @@ export default function TasksContextProvider({ children }) {
     if (
       task.task.trim() !== '' &&
       task.description.trim() !== '' &&
-      task.date
+      task.date && task.time
     ) {
       const taskItem = {
         task: task.task,
         isCompleted: false,
         description: task.description,
         date: task.date.toDateString(),
+        time: task.time.toTimeString(),
       };
       const taskId = await storeTask(
         { ...taskItem },

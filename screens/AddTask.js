@@ -11,8 +11,8 @@ export default function AddTask() {
 
   const tasksCtx = useContext(TasksContext);
 
-  function addTask(task, description, date) {
-    tasksCtx.addTask({ task: task, description: description, date: date });
+  function addTask(task, description, date, time) {
+    tasksCtx.addTask({ task: task, description: description, date: date, time: time });
     navigation.navigate('Tasks');
   }
 

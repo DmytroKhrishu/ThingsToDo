@@ -15,9 +15,10 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
     taskId ? editedTask.description : ''
   );
   const [date, onChangeDate] = useState(taskId ? editedTask.date : new Date());
+  const [time, onChangeTime] = useState(taskId ? editedTask.time : new Date());
 
   function onSubmit() {
-    onSubmitTask(task, description, date);
+    onSubmitTask(task, description, date, time);
   }
 
   let buttonTitle = '';
@@ -31,7 +32,7 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
     icon = 'save';
   }
 
-  return (
+  return (  
     <View style={styles.inputsContainer}>
       <Input label="Task:" onUpdateValue={onChangeTask} value={task} />
       <Input
@@ -39,7 +40,12 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
         onUpdateValue={onChangeDescription}
         value={description}
       />
-      <DateInput onChangeDate={onChangeDate} existingDate={taskId ? editedTask.date : null} />
+      <DateInput
+        onChangeDate={onChangeDate}
+        onChangeTime={onChangeTime}
+        existingDate={taskId ? editedTask.date : null}
+        existingTime={taskId ? editedTask.time : null}
+      />
       <Button title={buttonTitle} onPress={onSubmit} icon={icon} />
     </View>
   );
@@ -49,6 +55,6 @@ const styles = StyleSheet.create({
   inputsContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: Colors.mainBackground
+    backgroundColor: Colors.mainBackground,
   },
 });
