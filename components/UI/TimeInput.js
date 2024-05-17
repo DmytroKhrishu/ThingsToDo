@@ -16,8 +16,8 @@ export default function TimeInput({ onChangeTime, existingTime }) {
     // console.log(currentDate)
     setShow(false);
     setTime(currentTime);
-    onChangeTime(normalTimeString(currentTime));
-    setDisplayedTime(normalTimeString(currentTime));
+    onChangeTime(currentTime.toTimeString());
+    setDisplayedTime(currentTime.toTimeString());
   }
 
   function showTimePicker() {

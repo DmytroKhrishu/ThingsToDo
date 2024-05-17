@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../../const/colors';
+import { normalTimeString } from '../../util/time';
 
 export default function TaskItem({ task, onClick }) {
   let taskDescription = '';
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlignVertical: 'center',
-    padding: 5,
+    padding: 8,
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',

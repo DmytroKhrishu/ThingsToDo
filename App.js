@@ -141,6 +141,7 @@ function TasksTabs() {
         tabBarLabelStyle: { fontSize: 14 },
         headerStyle: { backgroundColor: Colors.headerBackground },
         headerTintColor: 'white',
+        headerTitleAlign: 'center'
       })}
     >
       <Tab.Screen
