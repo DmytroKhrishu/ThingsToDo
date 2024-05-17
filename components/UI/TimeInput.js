@@ -3,35 +3,35 @@ import { StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 import { useState } from 'react';
 
-export default function DateInput({ onChangeDate, existingDate }) {
-  const [date, setDate] = useState();
+export default function TimeInput({ onChangeTime, existingTime }) {
+  const [time, setTime] = useState();
   const [show, setShow] = useState(false);
-  const [displayedDate, setDisplayedDate] = useState(existingDate ? existingDate : null)
+  const [displayedTime, setDisplayedTime] = useState(existingTime ? existingTime : null)
 
   function onChange(event, selectedDate) {
-    const currentDate = selectedDate;
+    const currentTime = selectedDate;
     // console.log(currentDate)
     setShow(false);
-    setDate(currentDate);
-    onChangeDate(currentDate);
-    setDisplayedDate(currentDate.toDateString())
+    setTime(currentTime);
+    onChangeTime(currentTime);
+    setDisplayedTime(currentTime.toTimeString())
   }
 
-  function showDatePicker() {
+  function showTimePicker() {
     setShow(true);
   }
 
   return (
     <View>
-      {(date || displayedDate) && (
-        <Text style={styles.text}>Selected date: {displayedDate}</Text>
+      {(time || displayedTime) && (
+        <Text style={styles.text}>Selected time: {displayedTime}</Text>
       )}
-      <Button title="Select Date" onPress={showDatePicker} icon="calendar" />
+      <Button title="Select Time" onPress={showTimePicker} icon="time" />
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
           value={new Date()}
-          mode="date"
+          mode="time"
           is24Hour={true}
           onChange={onChange}
         />

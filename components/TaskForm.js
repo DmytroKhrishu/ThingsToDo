@@ -5,6 +5,7 @@ import Button from './UI/Button';
 import { useContext, useState } from 'react';
 import { TasksContext } from '../store/tasks-context';
 import { Colors } from '../const/colors';
+import TimeInput from './UI/TimeInput';
 
 export default function TaskForm({ onSubmitTask, mode, taskId }) {
   const tasksCtx = useContext(TasksContext);
@@ -42,8 +43,10 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
       />
       <DateInput
         onChangeDate={onChangeDate}
-        onChangeTime={onChangeTime}
         existingDate={taskId ? editedTask.date : null}
+        />
+      <TimeInput 
+        onChangeTime={onChangeTime}
         existingTime={taskId ? editedTask.time : null}
       />
       <Button title={buttonTitle} onPress={onSubmit} icon={icon} />
