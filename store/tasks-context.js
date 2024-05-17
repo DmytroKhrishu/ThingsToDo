@@ -35,8 +35,8 @@ export default function TasksContextProvider({ children }) {
         task: task.task,
         isCompleted: false,
         description: task.description,
-        date: task.date.toDateString(),
-        time: task.time.toTimeString(),
+        date: task.date,
+        time: task.time,
       };
       const taskId = await storeTask(
         { ...taskItem },

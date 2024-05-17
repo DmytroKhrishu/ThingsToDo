@@ -16,10 +16,20 @@ export default function TaskItem({ task, onClick }) {
         onPress={onClick}
         style={styles.item}
       >
-        <Text style={styles.title}>{task.task}</Text>
+        <Text
+          style={[
+            styles.title,
+            { textDecorationLine: task.isCompleted ? 'line-through' : null },
+          ]}
+        >
+          {task.task}
+        </Text>
         <View style={styles.detailsContainer}>
           <Text style={styles.text}>{taskDescription}</Text>
-          <Text style={styles.text}>{task.date}</Text>
+          <View style={styles.dateTimeContainer}>
+            <Text style={styles.text}>{task.date}</Text>
+            <Text style={styles.text}>{task.time}</Text>
+          </View>
         </View>
       </Pressable>
     </View>
@@ -42,13 +52,17 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     padding: 5,
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   detailsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 8,
+    alignItems: 'center',
+  },
+  dateTimeContainer: {
+    padding: 5,
   },
   text: {
     color: 'white',

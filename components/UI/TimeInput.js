@@ -2,19 +2,22 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 import { useState } from 'react';
+import { normalTimeString } from '../../util/time';
 
 export default function TimeInput({ onChangeTime, existingTime }) {
   const [time, setTime] = useState();
   const [show, setShow] = useState(false);
-  const [displayedTime, setDisplayedTime] = useState(existingTime ? existingTime : null)
+  const [displayedTime, setDisplayedTime] = useState(
+    existingTime ? existingTime : null
+  );
 
   function onChange(event, selectedDate) {
     const currentTime = selectedDate;
     // console.log(currentDate)
     setShow(false);
     setTime(currentTime);
-    onChangeTime(currentTime);
-    setDisplayedTime(currentTime.toTimeString())
+    onChangeTime(normalTimeString(currentTime));
+    setDisplayedTime(normalTimeString(currentTime));
   }
 
   function showTimePicker() {
@@ -43,6 +46,6 @@ export default function TimeInput({ onChangeTime, existingTime }) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
-    color: "white"
-  }
-})
+    color: 'white',
+  },
+});

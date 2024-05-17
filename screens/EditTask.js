@@ -8,17 +8,18 @@ import TaskForm from '../components/TaskForm';
 export default function EditTask() {
   const navigation = useNavigation();
   const route = useRoute();
-  
+
   const id = route.params.id;
 
   const tasksCtx = useContext(TasksContext);
 
-  function editTask(task, description, date) {
-    if (task.trim() !== '' && description.trim() !== '' && date) {
+  function editTask(task, description, date, time) {
+    if (task.trim() !== '' && description.trim() !== '' && date && time) {
       const taskItem = {
         task: task,
         description: description,
         date: date,
+        time: time,
       };
       tasksCtx.updateTask(id, taskItem);
       tasksCtx.setFetchedTasks();

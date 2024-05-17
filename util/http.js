@@ -21,8 +21,8 @@ export async function fetchTasks(token, userId) {
       description: response.data[key].description,
       isCompleted: response.data[key].isCompleted,
       userId: response.data.userId,
-      date: new Date(response.data[key].date).toDateString(),
-      time: new Date(response.data[key].time).toTimeString(),
+      date: response.data[key].date,
+      time: response.data[key].time,
     };
     if (response.data[key].userId === userId) {
       tasks.push(taskObj);
@@ -40,7 +40,7 @@ export function updateTaskBackend(id, taskData, token, userId) {
     isCompleted: taskData.isCompleted,
     userId: userId,
     date: taskData.date,
-    time: taskData.time
+    time: taskData.time,
   };
   return axios.put(BACKEND_URL + `/tasks/${id}.json?auth=` + token, {
     ...taskObj,

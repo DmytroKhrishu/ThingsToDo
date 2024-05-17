@@ -42,6 +42,7 @@ export default function TaskDetails({ taskId, onClose }) {
       <Text style={styles.text}>{task.task}</Text>
       <Text style={styles.text}>{task.description}</Text>
       <Text style={styles.text}>{task.date}</Text>
+      <Text style={styles.text}>{task.time}</Text>
       {taskIsComplete ? (
         <Button
           title="Un-complete task"

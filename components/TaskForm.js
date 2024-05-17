@@ -33,7 +33,7 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
     icon = 'save';
   }
 
-  return (  
+  return (
     <View style={styles.inputsContainer}>
       <Input label="Task:" onUpdateValue={onChangeTask} value={task} />
       <Input
@@ -41,14 +41,16 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
         onUpdateValue={onChangeDescription}
         value={description}
       />
-      <DateInput
-        onChangeDate={onChangeDate}
-        existingDate={taskId ? editedTask.date : null}
+      <View style={styles.dateTimeContainer}>
+        <DateInput
+          onChangeDate={onChangeDate}
+          existingDate={taskId ? editedTask.date : null}
         />
-      <TimeInput 
-        onChangeTime={onChangeTime}
-        existingTime={taskId ? editedTask.time : null}
-      />
+        <TimeInput
+          onChangeTime={onChangeTime}
+          existingTime={taskId ? editedTask.time : null}
+        />
+      </View>
       <Button title={buttonTitle} onPress={onSubmit} icon={icon} />
     </View>
   );
@@ -59,5 +61,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: Colors.mainBackground,
+  },
+  dateTimeContainer: {
+    // flexDirection: 'row',
+    // justifyContent: 'space-around',
   },
 });
