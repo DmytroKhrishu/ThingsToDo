@@ -4,7 +4,6 @@ import { TasksContext } from '../store/tasks-context';
 import Button from './UI/Button';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../const/colors';
-import { normalTimeString } from '../util/time';
 
 export default function TaskDetails({ taskId, onClose }) {
   const tasksCtx = useContext(TasksContext);

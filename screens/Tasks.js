@@ -4,24 +4,26 @@ import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
 import { Text } from 'react-native';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
+import { AuthContext } from '../store/auth-context';
 
 export default function Tasks() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [clickedItemId, setClickedItemId] = useState('');
   const tasksCtx = useContext(TasksContext);
+  const authCtx = useContext(AuthContext);
 
   const tasks = tasksCtx.tasks;
   const isFetching = tasksCtx.isFetching;
 
   useEffect(() => {
     async function getTasks() {
-       tasksCtx.setFetchedTasks();
+      tasksCtx.setFetchedTasks();
     }
     getTasks();
   }, []);
 
-  if(isFetching){
-    return <LoadingOverlay />
+  if (isFetching) {
+    return <LoadingOverlay />;
   }
 
   const uncompletedTasks =

@@ -13,7 +13,7 @@ async function authenticate(mode, email, password) {
   const token = response.data.idToken;
   const userId = response.data.localId;
   const userEmail = response.data.email;
-  console.log(response);
+  // console.log(response);
   return {token, userId, userEmail};
 }
 

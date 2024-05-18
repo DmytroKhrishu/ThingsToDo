@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../../const/colors';
-import { normalTimeString } from '../../util/time';
 
 export default function TaskItem({ task, onClick }) {
   let taskDescription = '';

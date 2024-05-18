@@ -28,6 +28,7 @@ import {
   DrawerItem,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
+import { Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -53,11 +54,11 @@ function CustomDrawerContent() {
   const userEmail = authCtx.userEmail;
   return (
     <DrawerContentScrollView>
-      <DrawerItem
-        label={userEmail ? userEmail : "User"}
-        onPress={() => {}}
-        inactiveTintColor="white"
-      />
+      <Text
+        style={{ color: 'white', padding: 8, marginLeft: 10, marginTop: 8 }}
+      >
+        {userEmail}
+      </Text>
       <DrawerItem
         label="Logout"
         icon={({ color, size }) => (
@@ -71,7 +72,6 @@ function CustomDrawerContent() {
 }
 
 function AuthenticatedStack() {
-
   return (
     <Drawer.Navigator
       screenOptions={({ navigation }) => ({
@@ -117,7 +117,7 @@ function TasksStack() {
       <Stack.Screen
         name="AddTask"
         component={AddTask}
-        options={{ title: 'Add Task',  }}
+        options={{ title: 'Add Task' }}
       />
       <Stack.Screen
         name="EditTask"
@@ -141,7 +141,7 @@ function TasksTabs() {
         tabBarLabelStyle: { fontSize: 14 },
         headerStyle: { backgroundColor: Colors.headerBackground },
         headerTintColor: 'white',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
       })}
     >
       <Tab.Screen

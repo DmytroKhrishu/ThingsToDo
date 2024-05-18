@@ -26,7 +26,7 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
   let icon = '';
 
   if (mode === 'add') {
-    buttonTitle = 'Add Task';
+    buttonTitle = 'Add';
     icon = 'add';
   } else if (mode === 'edit') {
     buttonTitle = 'Save Changes';

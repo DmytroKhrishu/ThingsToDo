@@ -4,16 +4,21 @@ import AddTaskItem from '../AddTaskItem';
 import { Colors } from '../../const/colors';
 import { useContext, useEffect, useState } from 'react';
 import { TasksContext } from '../../store/tasks-context';
+import { AuthContext } from '../../store/auth-context';
 
 export default function TaskList({ tasks, onItemClick }) {
   const [refreshing, setRefreshing] = useState(false);
 
   const tasksCtx = useContext(TasksContext);
+  const authCtx = useContext(AuthContext);
 
   function onRefresh() {
-      setRefreshing(true);
-      tasksCtx.setFetchedTasks();
-      setRefreshing(false);
+    setRefreshing(true);
+    if (!authCtx.userId) {
+      authCtx.logout();
+    }
+    tasksCtx.setFetchedTasks();
+    setRefreshing(false);
   }
 
   return (
@@ -28,7 +33,9 @@ export default function TaskList({ tasks, onItemClick }) {
           }
           return <TaskItem task={item} onClick={() => onItemClick(item.id)} />;
         }}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </>
   );

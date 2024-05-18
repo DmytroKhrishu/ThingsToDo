@@ -16,6 +16,7 @@ function LoginScreen() {
       const {token, userId, userEmail} = await login(email, password);
       console.log(userId)
       authCtx.authenticate(token, userId, userEmail);
+      setIsAuthenticating(false);
     } catch (error) {
       Alert.alert(
         'Login failed',

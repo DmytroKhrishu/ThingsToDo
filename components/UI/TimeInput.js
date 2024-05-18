@@ -2,7 +2,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 import { useState } from 'react';
-import { normalTimeString } from '../../util/time';
 
 export default function TimeInput({ onChangeTime, existingTime }) {
   const [time, setTime] = useState();

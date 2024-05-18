@@ -29,7 +29,8 @@ export default function TasksContextProvider({ children }) {
     if (
       task.task.trim() !== '' &&
       task.description.trim() !== '' &&
-      task.date && task.time
+      task.date &&
+      task.time
     ) {
       const taskItem = {
         task: task.task,

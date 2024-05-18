@@ -28,7 +28,12 @@ export async function fetchTasks(token, userId) {
       tasks.push(taskObj);
     }
   }
-  console.log(tasks);
+  tasks.sort((a, b) => {
+    let dateA = new Date(a.date);
+    let dateB = new Date(b.date);
+
+    return dateA - dateB;
+  });
   return tasks;
 }
 

@@ -7,7 +7,6 @@ export default function DetailsModal({ taskId, onClose, isVisible }) {
       transparent
       visible={isVisible}
       animationType="slide"
-      style={styles.modal}
       onRequestClose={onClose}
     >
       <TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={onClose}>
@@ -18,8 +17,5 @@ export default function DetailsModal({ taskId, onClose, isVisible }) {
 }
 
 const styles = StyleSheet.create({
-  modal: {
-    marginTop: 35,
-    padding: 20,
-  },
+ 
 });
