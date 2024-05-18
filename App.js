@@ -28,7 +28,7 @@ import {
   DrawerItem,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
-import { Text } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -44,7 +44,7 @@ function AuthStack() {
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} options={{title: 'Sign Up'}} />
     </Stack.Navigator>
   );
 }
@@ -94,7 +94,7 @@ function AuthenticatedStack() {
         component={TasksStack}
         options={({ route }) => ({
           title: 'ThingsToDo',
-          headerShown: true,
+          headerShown: false,
         })}
       />
     </Drawer.Navigator>
@@ -205,13 +205,13 @@ function Root() {
 
 export default function App() {
   return (
-    <>
+    <SafeAreaView style={{flex: 1, backgroundColor: Colors.headerBackground}}>
       <StatusBar style="light" />
       <AuthContextProvider>
         <TasksContextProvider>
           <Root />
         </TasksContextProvider>
       </AuthContextProvider>
-    </>
+    </SafeAreaView>
   );
 }

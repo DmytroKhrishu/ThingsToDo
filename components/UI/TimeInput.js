@@ -1,18 +1,19 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 import { useState } from 'react';
 
 export default function TimeInput({ onChangeTime, existingTime }) {
-  const [time, setTime] = useState();
+  const [time, setTime] = useState(
+     new Date()
+  );
   const [show, setShow] = useState(false);
   const [displayedTime, setDisplayedTime] = useState(
-    existingTime ? existingTime : null
+    existingTime ? existingTime.slice(0, 5) : null
   );
 
   function onChange(event, selectedDate) {
     const currentTime = selectedDate;
-    // console.log(currentDate)
     setShow(false);
     setTime(currentTime);
     onChangeTime(currentTime.toTimeString());
@@ -25,17 +26,21 @@ export default function TimeInput({ onChangeTime, existingTime }) {
 
   return (
     <View>
-      {(time || displayedTime) && (
+      {displayedTime && Platform.OS === 'android' && (
         <Text style={styles.text}>Selected time: {displayedTime}</Text>
       )}
-      <Button title="Select Time" onPress={showTimePicker} icon="time" />
-      {show && (
+      {Platform.OS === 'android' && (
+        <Button title="Select Time" onPress={showTimePicker} icon="time" />
+      )}
+
+      {(Platform.OS === 'ios' || (Platform.OS === 'android' && show)) && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={new Date()}
+          value={time}
           mode="time"
           is24Hour={true}
           onChange={onChange}
+          themeVariant="dark"
         />
       )}
     </View>

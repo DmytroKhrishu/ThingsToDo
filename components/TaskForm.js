@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import Input from './UI/Input';
 import DateInput from './UI/DateInput';
 import Button from './UI/Button';
@@ -32,7 +32,6 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
     buttonTitle = 'Save Changes';
     icon = 'save';
   }
-
   return (
     <View style={styles.inputsContainer}>
       <Input label="Task:" onUpdateValue={onChangeTask} value={task} />
@@ -41,7 +40,7 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
         onUpdateValue={onChangeDescription}
         value={description}
       />
-      <View style={styles.dateTimeContainer}>
+      <View style={Platform.OS === 'ios' ? styles.dateTimeContainer : null}>
         <DateInput
           onChangeDate={onChangeDate}
           existingDate={taskId ? editedTask.date : null}
@@ -63,7 +62,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainBackground,
   },
   dateTimeContainer: {
-    // flexDirection: 'row',
-    // justifyContent: 'space-around',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginVertical: 12
   },
 });

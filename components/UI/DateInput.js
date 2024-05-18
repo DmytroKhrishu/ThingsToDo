@@ -1,10 +1,12 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 import { useState } from 'react';
 
 export default function DateInput({ onChangeDate, existingDate }) {
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(
+    existingDate ? new Date(existingDate) : new Date()
+  );
   const [show, setShow] = useState(false);
   const [displayedDate, setDisplayedDate] = useState(
     existingDate ? existingDate : null
@@ -25,18 +27,23 @@ export default function DateInput({ onChangeDate, existingDate }) {
 
   return (
     <View>
-      {(date || displayedDate) && (
+      {(date || displayedDate) && Platform.OS === 'android' && (
         <Text style={styles.text}>Selected date: {displayedDate}</Text>
       )}
-      <Button title="Select Date" onPress={showDatePicker} icon="calendar" />
-      {show && (
+      {Platform.OS === 'android' && (
+        <Button title="Select Date" onPress={showDatePicker} icon="calendar" />
+      )}
+
+      {(Platform.OS === 'ios' || (Platform.OS === 'android' && show)) && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={new Date()}
+          value={date}
           minimumDate={new Date()}
           mode="date"
           is24Hour={true}
           onChange={onChange}
+          themeVariant="dark"
+          // style={{ alignSelf: 'flex-start' }}
         />
       )}
     </View>

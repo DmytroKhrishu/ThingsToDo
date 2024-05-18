@@ -1,4 +1,11 @@
-import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import TaskItem from './TaskItem';
 import AddTaskItem from '../AddTaskItem';
 import { Colors } from '../../const/colors';
@@ -41,22 +48,26 @@ export default function TaskList({ tasks, onItemClick }) {
           }
         />
       ) : (
-        <View style={{ flex: 1,backgroundColor: Colors.mainBackground }}>
+        <ScrollView
+          style={{ flex: 1, backgroundColor: Colors.mainBackground }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           <Text style={styles.noTasksText}>No tasks yet</Text>
           <AddTaskItem />
-        </View>
+        </ScrollView>
       )}
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  noTasksContainer: {
-  },
+  noTasksContainer: {},
   noTasksText: {
     textAlign: 'center',
-    color: 'white', 
+    color: 'white',
     marginVertical: 30,
-    fontSize: 24
-  }
+    fontSize: 24,
+  },
 });
