@@ -16,7 +16,7 @@ export default function TimeInput({ onChangeTime, existingTime }) {
     setShow(false);
     setTime(currentTime);
     onChangeTime(currentTime.toTimeString());
-    setDisplayedTime(currentTime.toTimeString());
+    setDisplayedTime(currentTime.toTimeString().slice(0, 5));
   }
 
   function showTimePicker() {

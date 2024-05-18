@@ -27,8 +27,8 @@ export default function TaskItem({ task, onClick }) {
         <View style={styles.detailsContainer}>
           <Text style={styles.text}>{taskDescription}</Text>
           <View style={styles.dateTimeContainer}>
+            <Text style={styles.text}>{task.time.slice(0, 5)}</Text>
             <Text style={styles.text}>{task.date}</Text>
-            <Text style={styles.text}>{task.time}</Text>
           </View>
         </View>
       </Pressable>

@@ -3,6 +3,7 @@ import TaskList from '../components/TasksOutput/TaskList';
 import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
+import { Text } from 'react-native';
 
 export default function CompletedTasks() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -20,7 +21,7 @@ export default function CompletedTasks() {
   }, []);
 
   if (isFetching) {
-    return <LoadingOverlay />
+    return <LoadingOverlay />;
   }
 
   const completedTasks =
@@ -46,9 +47,7 @@ export default function CompletedTasks() {
         onClose={closeModal}
         isVisible={modalIsVisible}
       />
-      {completedTasks && (
-        <TaskList tasks={completedTasks} onItemClick={onItemClick} />
-      )}
+      <TaskList tasks={completedTasks} onItemClick={onItemClick} />
     </>
   );
 }

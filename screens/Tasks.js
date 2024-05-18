@@ -50,11 +50,7 @@ export default function Tasks() {
         onClose={closeModal}
         isVisible={modalIsVisible}
       />
-      {uncompletedTasks ? (
-        <TaskList tasks={uncompletedTasks} onItemClick={onItemClick} />
-      ) : (
-        <Text>No tasks yet</Text>
-      )}
+      <TaskList tasks={uncompletedTasks} onItemClick={onItemClick} />
     </>
   );
 }

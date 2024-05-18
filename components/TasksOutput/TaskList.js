@@ -1,4 +1,4 @@
-import { FlatList, RefreshControl, Text, View } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import TaskItem from './TaskItem';
 import AddTaskItem from '../AddTaskItem';
 import { Colors } from '../../const/colors';
@@ -23,20 +23,40 @@ export default function TaskList({ tasks, onItemClick }) {
 
   return (
     <>
-      <FlatList
-        style={{ backgroundColor: Colors.mainBackground }}
-        data={[...tasks, { id: 'addTask', addTask: true }]}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          if (item.addTask) {
-            return <AddTaskItem />;
+      {tasks.length > 0 ? (
+        <FlatList
+          style={{ backgroundColor: Colors.mainBackground }}
+          data={[...tasks, { id: 'addTask', addTask: true }]}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            if (item.addTask) {
+              return <AddTaskItem />;
+            }
+            return (
+              <TaskItem task={item} onClick={() => onItemClick(item.id)} />
+            );
+          }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          return <TaskItem task={item} onClick={() => onItemClick(item.id)} />;
-        }}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
+        />
+      ) : (
+        <View style={{ flex: 1,backgroundColor: Colors.mainBackground }}>
+          <Text style={styles.noTasksText}>No tasks yet</Text>
+          <AddTaskItem />
+        </View>
+      )}
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  noTasksContainer: {
+  },
+  noTasksText: {
+    textAlign: 'center',
+    color: 'white', 
+    marginVertical: 30,
+    fontSize: 24
+  }
+});
