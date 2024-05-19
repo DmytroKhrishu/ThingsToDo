@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export default function TimeInput({ onChangeTime, existingTime }) {
   const [time, setTime] = useState(
-     new Date()
+    new Date()
   );
   const [show, setShow] = useState(false);
   const [displayedTime, setDisplayedTime] = useState(

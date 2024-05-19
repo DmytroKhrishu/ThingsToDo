@@ -16,7 +16,6 @@ export const TasksContext = createContext({
   uncompleteTask: (id) => {},
   deleteTask: (id) => {},
   updateTask: (id, { task, description, date, time }) => {},
-  clearContext: () => {},
 });
 
 export default function TasksContextProvider({ children }) {
@@ -57,7 +56,7 @@ export default function TasksContextProvider({ children }) {
       setTasks(fetchedTasks);
       setIsFetching(false);
     } catch (error) {
-      console.log(error);
+      Alert.alert('Error', error)
       setIsFetching(false);
     }
   }
@@ -111,10 +110,7 @@ export default function TasksContextProvider({ children }) {
     }
   }
 
-  function clearContext() {
-    setTasks([]);
-  }
-
+ 
   const value = {
     tasks: tasks,
     isFetching,
@@ -124,7 +120,6 @@ export default function TasksContextProvider({ children }) {
     uncompleteTask,
     deleteTask,
     updateTask,
-    clearContext,
   };
 
   return (

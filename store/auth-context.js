@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAppState } from '@react-native-community/hooks';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { TasksContext } from './tasks-context';
+import LoadingOverlay from '../components/UI/LoadingOverlay';
+import { Alert } from 'react-native';
 
 export const AuthContext = createContext({
   token: '',
@@ -16,27 +16,24 @@ export default function AuthContextProvider({ children }) {
   const [authToken, setAuthToken] = useState(null);
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState('');
-  const tasksCtx = useContext(TasksContext);
+  const [isTryingLogin, setIsTryingLogin] = useState(false);
 
-  const appState = useAppState();
-
-  useEffect(() => {
-    const checkToken = async () => {
-      const storedToken = await AsyncStorage.getItem('token');
-      if (!storedToken) {
-        logout();
-      }
-    };
-
-    checkToken();
-  }, [appState]);
 
   function authenticate(token, userId, userEmail) {
-    setAuthToken(token);
-    setUserId(userId);
-    setUserEmail(userEmail);
-    AsyncStorage.setItem('token', token);
-    AsyncStorage.setItem('userId', userId);
+    try {
+      setIsTryingLogin(true);
+      setAuthToken(token);
+      setUserId(userId);
+      setUserEmail(userEmail);
+      AsyncStorage.setItem('token', token);
+      AsyncStorage.setItem('userId', userId);
+      setIsTryingLogin(false);
+    } catch (error) {
+      Alert.alert('Error', error);
+    }
+    if (isTryingLogin) {
+      return <LoadingOverlay />;
+    }
   }
 
   function logout() {
@@ -45,7 +42,6 @@ export default function AuthContextProvider({ children }) {
     setUserEmail('');
     AsyncStorage.removeItem('token');
     AsyncStorage.removeItem('userId');
-    tasksCtx.clearContext();
   }
 
   const value = {

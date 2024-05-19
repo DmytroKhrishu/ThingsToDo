@@ -28,7 +28,7 @@ import {
   DrawerItem,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
-import { SafeAreaView, Text } from 'react-native';
+import { Alert, SafeAreaView, Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -44,7 +44,11 @@ function AuthStack() {
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} options={{title: 'Sign Up'}} />
+      <Stack.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{ title: 'Sign Up' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -94,7 +98,7 @@ function AuthenticatedStack() {
         component={TasksStack}
         options={({ route }) => ({
           title: 'ThingsToDo',
-          headerShown: false,
+          headerShown: true,
         })}
       />
     </Drawer.Navigator>
@@ -172,44 +176,24 @@ function Navigation() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <NavigationContainer>
+    <>
       {!authCtx.isAuthenticated && <AuthStack />}
       {authCtx.isAuthenticated && <AuthenticatedStack />}
-    </NavigationContainer>
+    </>
   );
 }
 
-function Root() {
-  const [isTryingLogin, setIsTryingLogin] = useState(true);
-  const authCtx = useContext(AuthContext);
 
-  useEffect(() => {
-    async function fetchToken() {
-      const storedToken = await AsyncStorage.getItem('token');
-      if (storedToken) {
-        authCtx.authenticate(storedToken);
-      }
-
-      setIsTryingLogin(false);
-    }
-
-    fetchToken();
-  }, []);
-
-  if (isTryingLogin) {
-    return <LoadingOverlay />;
-  }
-
-  return <Navigation />;
-}
 
 export default function App() {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: Colors.headerBackground}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.headerBackground }}>
       <StatusBar style="light" />
       <AuthContextProvider>
         <TasksContextProvider>
-          <Root />
+          <NavigationContainer>
+            <Navigation />
+          </NavigationContainer>
         </TasksContextProvider>
       </AuthContextProvider>
     </SafeAreaView>
