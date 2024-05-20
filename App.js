@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Tasks from './screens/Tasks';
 import AddTask from './screens/AddTask';
-import TasksContextProvider from './store/tasks-context';
+import TasksContextProvider, { TasksContext } from './store/tasks-context';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -55,6 +55,7 @@ function AuthStack() {
 
 function CustomDrawerContent() {
   const authCtx = useContext(AuthContext);
+  const tasksCtx = useContext(TasksContext)
   const userEmail = authCtx.userEmail;
   return (
     <DrawerContentScrollView>
@@ -71,6 +72,14 @@ function CustomDrawerContent() {
         onPress={authCtx.logout}
         inactiveTintColor="white"
       />
+      {/* <DrawerItem
+        label="Light Theme"
+        icon={({ color, size }) => (
+          <Ionicons name="exit" color={color} size={size} />
+        )}
+        // onPress={tasksCtx.setTheme('light')}
+        inactiveTintColor="white"
+      /> */}
     </DrawerContentScrollView>
   );
 }

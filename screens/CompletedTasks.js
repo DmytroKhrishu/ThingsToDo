@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import TaskList from '../components/TasksOutput/TaskList';
 import { TasksContext } from '../store/tasks-context';
 import DetailsModal from '../components/DetailsModal';
@@ -11,16 +11,13 @@ export default function CompletedTasks() {
 
   const tasksCtx = useContext(TasksContext);
   const tasks = tasksCtx.tasks;
-  const isFetching = tasksCtx.isFetching;
 
-  useEffect(() => {
-    async function getTasks() {
+  useLayoutEffect(() => {
       tasksCtx.setFetchedTasks();
-    }
-    getTasks();
+   
   }, []);
 
-  if (isFetching) {
+  if (tasksCtx.isFetching) {
     return <LoadingOverlay />;
   }
 

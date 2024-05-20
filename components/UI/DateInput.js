@@ -27,7 +27,7 @@ export default function DateInput({ onChangeDate, existingDate }) {
 
   return (
     <View>
-      {(date || displayedDate) && Platform.OS === 'android' && (
+      {(displayedDate) && Platform.OS === 'android' && (
         <Text style={styles.text}>Selected date: {displayedDate}</Text>
       )}
       {Platform.OS === 'android' && (

@@ -10,6 +10,8 @@ import { AuthContext } from './auth-context';
 
 export const TasksContext = createContext({
   tasks: [],
+  theme: '',
+  setTheme: (theme) => {},
   addTask: ({ task, description, date, time }) => {},
   setFetchedTasks: (tasks) => {},
   completeTask: (id) => {},
@@ -21,6 +23,7 @@ export const TasksContext = createContext({
 export default function TasksContextProvider({ children }) {
   const [tasks, setTasks] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [appTheme, setAppTheme] = useState('dark')
 
   const authCtx = useContext(AuthContext);
 
@@ -56,7 +59,7 @@ export default function TasksContextProvider({ children }) {
       setTasks(fetchedTasks);
       setIsFetching(false);
     } catch (error) {
-      Alert.alert('Error', error)
+      Alert.alert('Error', "Could not fetch tasks")
       setIsFetching(false);
     }
   }
@@ -110,10 +113,16 @@ export default function TasksContextProvider({ children }) {
     }
   }
 
+  function setTheme(theme){
+    setAppTheme(theme)
+  }
+
  
   const value = {
     tasks: tasks,
     isFetching,
+    theme: appTheme, 
+    setTheme,
     addTask,
     setFetchedTasks,
     completeTask,

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 150,
     backgroundColor: Colors.modalBackground,
     elevation: 8,
-    borderRadius: 8,
+    borderRadius: 16,
   },
   text: {
     textAlign: 'center',

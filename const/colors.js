@@ -1,3 +1,5 @@
+
+
 export const Colors = {
   mainBackground: '#2c2828ff',
   tabBarBackground: '#201d1dff',

@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
 } from 'react-native';
 import TaskItem from './TaskItem';
 import AddTaskItem from '../AddTaskItem';
@@ -44,7 +43,7 @@ export default function TaskList({ tasks, onItemClick }) {
             );
           }}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            <RefreshControl tintColor={'white'} colors={["white"]} refreshing={refreshing} onRefresh={onRefresh} />
           }
         />
       ) : (
