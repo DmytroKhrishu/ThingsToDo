@@ -1,38 +1,79 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Checkbox from 'expo-checkbox';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Colors } from '../../const/colors';
+import { useContext } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { TasksContext } from '../../store/tasks-context';
+import Button from '../UI/Button';
 
 export default function TaskItem({ task, onClick }) {
-  let taskDescription = '';
-  if (task.description.length >= 25) {
-    taskDescription = task.description.substring(0, 25) + '...';
-  } else {
-    taskDescription = task.description;
+  const tasksCtx = useContext(TasksContext);
+
+  function toggleComplete() {
+    if (task.isCompleted) {
+      tasksCtx.uncompleteTask(task.id);
+    } else {
+      tasksCtx.completeTask(task.id);
+    }
+  }
+
+  function renderRightActions() {
+    return (
+      <Button
+        onPress={() => tasksCtx.deleteTask(task.id)}
+        icon="trash"
+        iconSize={25}
+        style={styles.deleteTaskContainer}
+      />
+    );
   }
 
   return (
-    <View style={styles.itemContainer}>
-      <Pressable
-        android_ripple={{ color: 'grey' }}
-        onPress={onClick}
-        style={styles.item}
-      >
-        <Text
-          style={[
-            styles.title,
-            { textDecorationLine: task.isCompleted ? 'line-through' : null },
-          ]}
-        >
-          {task.task}
-        </Text>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.text}>{taskDescription}</Text>
-          <View style={styles.dateTimeContainer}>
-            <Text style={styles.text}>{task.time.slice(0, 5)}</Text>
-            <Text style={styles.text}>{task.date}</Text>
-          </View>
+    <GestureHandlerRootView>
+      <Swipeable renderRightActions={renderRightActions} overshootFriction={8}>
+        <View style={styles.itemContainer}>
+          <Pressable
+            android_ripple={{ color: 'grey' }}
+            onPress={onClick}
+            style={styles.item}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Checkbox
+                value={task.isCompleted}
+                onValueChange={toggleComplete}
+                style={{ marginHorizontal: 15 }}
+              />
+              <View>
+                <Text
+                  style={[
+                    styles.title,
+                    {
+                      textDecorationLine: task.isCompleted
+                        ? 'line-through'
+                        : null,
+                    },
+                  ]}
+                >
+                  {task.task}
+                </Text>
+
+                <View style={styles.dateTimeContainer}>
+                  <Text style={styles.text}>{task.date}</Text>
+                  <Text> </Text>
+                  <Text style={styles.text}>{task.time.slice(0, 5)}</Text>
+                </View>
+              </View>
+            </View>
+          </Pressable>
         </View>
-      </Pressable>
-    </View>
+      </Swipeable>
+    </GestureHandlerRootView>
   );
 }
 
@@ -57,14 +98,25 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     paddingHorizontal: 8,
     alignItems: 'center',
   },
   dateTimeContainer: {
-    padding: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 8,
   },
   text: {
     color: 'white',
+  },
+  deleteTaskContainer: {
+    marginVertical: 8,
+    marginRight: 15,
+    borderRadius: 12,
+    elevation: 6,
+    backgroundColor: 'red',
+    overflow: 'hidden',
+    justifyContent: 'center',
   },
 });

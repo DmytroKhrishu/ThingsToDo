@@ -7,6 +7,7 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import Tasks from './screens/Tasks';
 import AddTask from './screens/AddTask';
 import TasksContextProvider, { TasksContext } from './store/tasks-context';
@@ -31,6 +32,7 @@ import {
 import { Alert, SafeAreaView, Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
+// const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 

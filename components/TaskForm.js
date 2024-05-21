@@ -33,25 +33,34 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
     icon = 'save';
   }
   return (
-    <View style={styles.inputsContainer}>
-      <Input label="Task:" onUpdateValue={onChangeTask} value={task} />
-      <Input
-        label="Description:"
-        onUpdateValue={onChangeDescription}
-        value={description}
-      />
-      <View style={Platform.OS === 'ios' ? styles.dateTimeContainer : null}>
-        <DateInput
-          onChangeDate={onChangeDate}
-          existingDate={taskId ? editedTask.date : null}
+    <>
+      <View style={styles.inputsContainer}>
+        <Input label="Task:" onUpdateValue={onChangeTask} value={task} />
+        <Input
+          label="Description:"
+          onUpdateValue={onChangeDescription}
+          value={description}
         />
-        <TimeInput
-          onChangeTime={onChangeTime}
-          existingTime={taskId ? editedTask.time : null}
+        <View style={Platform.OS === 'ios' ? styles.dateTimeContainer : null}>
+          <DateInput
+            onChangeDate={onChangeDate}
+            existingDate={taskId ? editedTask.date : null}
+          />
+          <TimeInput
+            onChangeTime={onChangeTime}
+            existingTime={taskId ? editedTask.time : null}
+          />
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          title={buttonTitle}
+          onPress={onSubmit}
+          icon={icon}
+          style={styles.submitButton}
         />
       </View>
-      <Button title={buttonTitle} onPress={onSubmit} icon={icon} />
-    </View>
+    </>
   );
 }
 
@@ -64,6 +73,14 @@ const styles = StyleSheet.create({
   dateTimeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginVertical: 12
+    marginVertical: 12,
+  },
+  buttonContainer: {
+    backgroundColor: Colors.mainBackground,
+  },
+  submitButton: {
+    paddingVertical: 15,
+    marginBottom: 15,
+    backgroundColor: '#4027ce',
   },
 });
