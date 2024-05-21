@@ -17,7 +17,7 @@ export default function DateInput({ onChangeDate, existingDate }) {
     // console.log(currentDate)
     setShow(false);
     setDate(currentDate);
-    onChangeDate(currentDate.toDateString());
+    onChangeDate(currentDate);
     setDisplayedDate(currentDate.toDateString());
   }
 

@@ -38,8 +38,8 @@ export default function TasksContextProvider({ children }) {
         task: task.task,
         isCompleted: false,
         description: task.description,
-        date: task.date,
-        time: task.time,
+        date: task.date.toDateString(),
+        time: task.time.toTimeString(),
       };
       const taskId = await storeTask(
         { ...taskItem },

@@ -79,7 +79,7 @@ export default function TaskItem({ task, onClick }) {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    margin: 8,
+    marginVertical: 8,
     marginHorizontal: 15,
     borderRadius: 12,
     elevation: 6,
@@ -118,5 +118,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     overflow: 'hidden',
     justifyContent: 'center',
+    width: 60
   },
 });

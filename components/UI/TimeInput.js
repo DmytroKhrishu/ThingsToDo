@@ -16,7 +16,7 @@ export default function TimeInput({ onChangeTime, existingTime }) {
     const currentTime = selectedTime;
     setShow(false);
     setTime(currentTime);
-    onChangeTime(currentTime.toTimeString());
+    onChangeTime(currentTime);
     setDisplayedTime(currentTime.toTimeString().slice(0, 5));
   }
 
