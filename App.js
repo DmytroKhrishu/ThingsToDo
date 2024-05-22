@@ -30,6 +30,7 @@ import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import { Alert, SafeAreaView, Text } from 'react-native';
+import MyDay from './screens/MyDay';
 
 const Tab = createBottomTabNavigator();
 // const Tab = createMaterialBottomTabNavigator();
@@ -159,6 +160,16 @@ function TasksTabs() {
         headerTitleAlign: 'center',
       })}
     >
+      <Tab.Screen
+        name="MyDay"
+        component={MyDay}
+        options={{
+          title: 'My Day',
+          tabBarIcon: ({ size, color }) => (
+            <Ionicons name="today" size={size} color={color} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="AllTasks"
         component={Tasks}

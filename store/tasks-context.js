@@ -88,7 +88,7 @@ export default function TasksContextProvider({ children }) {
 
   async function deleteTask(id) {
     try {
-      deleteTaskBackend(id, authCtx.token);
+      deleteTaskBackend(id, authCtx.token, authCtx.userId);
       await setFetchedTasks();
     } catch (error) {
       console.log(error);
