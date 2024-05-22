@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import Input from './UI/Input';
 import DateInput from './UI/DateInput';
 import Button from './UI/Button';
@@ -32,14 +32,20 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
     buttonTitle = 'Save Changes';
     icon = 'save';
   }
+
+  function addToMyDayHandler() {
+    onChangeDate(new Date().toDateString());
+  }
+
   return (
     <>
-      <View style={styles.inputsContainer}>
+      <ScrollView style={styles.inputsContainer}>
         <Input label="Task:" onUpdateValue={onChangeTask} value={task} />
         <Input
           label="Description:"
           onUpdateValue={onChangeDescription}
           value={description}
+          multiline
         />
         <View style={Platform.OS === 'ios' ? styles.dateTimeContainer : null}>
           <DateInput
@@ -51,7 +57,10 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
             existingTime={taskId ? editedTask.time : null}
           />
         </View>
-      </View>
+        {mode === 'edit' && task.date !== new Date().toDateString() && (
+          <Button onPress={addToMyDayHandler} title="Add to My Day" />
+        )}
+      </ScrollView>
       <View style={styles.buttonContainer}>
         <Button
           title={buttonTitle}
@@ -67,7 +76,8 @@ export default function TaskForm({ onSubmitTask, mode, taskId }) {
 const styles = StyleSheet.create({
   inputsContainer: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     backgroundColor: Colors.mainBackground,
   },
   dateTimeContainer: {

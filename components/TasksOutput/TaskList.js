@@ -31,7 +31,7 @@ export default function TaskList({ tasks, onItemClick }) {
     <>
       {tasks.length > 0 ? (
         <FlatList
-          style={{ backgroundColor: Colors.mainBackground }}
+          style={{ backgroundColor: Colors.mainBackground, paddingTop: 15 }}
           data={[...tasks, { id: 'addTask', addTask: true }]}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {

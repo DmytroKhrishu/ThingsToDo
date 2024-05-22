@@ -83,6 +83,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderRadius: 12,
     elevation: 6,
+    shadowColor: 'black',
+    shadowRadius: 4,
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.4,
     backgroundColor: Colors.itemBackground,
     overflow: 'hidden',
   },
@@ -91,7 +95,9 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlignVertical: 'center',
-    padding: 8,
+    paddingLeft: 8,
+    paddingTop: 5,
+    paddingBottom: 5,
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
@@ -105,19 +111,20 @@ const styles = StyleSheet.create({
   dateTimeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 8,
+    paddingLeft: 8,
+    paddingBottom: 5
   },
   text: {
     color: 'white',
   },
   deleteTaskContainer: {
-    marginVertical: 8,
+    // marginVertical: 8,
     marginRight: 15,
     borderRadius: 12,
     elevation: 6,
     backgroundColor: 'red',
     overflow: 'hidden',
     justifyContent: 'center',
-    width: 60
+    width: 60,
   },
 });

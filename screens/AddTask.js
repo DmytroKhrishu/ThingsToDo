@@ -13,7 +13,7 @@ export default function AddTask() {
 
   function addTask(task, description, date, time) {
     tasksCtx.addTask({ task: task, description: description, date: date, time: time });
-    navigation.navigate('Tasks');
+    navigation.goBack();
   }
 
   return <TaskForm onSubmitTask={addTask} mode="add" />;

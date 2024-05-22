@@ -1,4 +1,5 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { Colors } from '../../const/colors';
 
 function Input({
   label,
@@ -7,6 +8,7 @@ function Input({
   onUpdateValue,
   value,
   isInvalid,
+  multiline
 }) {
   return (
     <View style={styles.inputContainer}>
@@ -20,6 +22,8 @@ function Input({
         secureTextEntry={secure}
         onChangeText={onUpdateValue}
         value={value}
+        keyboardAppearance='dark'
+        multiline={multiline}
       />
     </View>
   );
@@ -41,9 +45,12 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 8,
     paddingHorizontal: 6,
-    backgroundColor: "white",
+    backgroundColor: Colors.mainBackground,
     borderRadius: 4,
     fontSize: 16,
+    color: 'white',
+    borderWidth: 1,
+    borderColor: 'white'
   },
   inputInvalid: {
     backgroundColor: "red",

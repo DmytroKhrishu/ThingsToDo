@@ -8,22 +8,22 @@ import TaskForm from '../components/TaskForm';
 export default function EditTask() {
   const navigation = useNavigation();
   const route = useRoute();
+  const tasksCtx = useContext(TasksContext);
 
   const id = route.params.id;
-
-  const tasksCtx = useContext(TasksContext);
+  const editedTask = tasksCtx.tasks.find((task) => task.id === id);
 
   function editTask(task, description, date, time) {
     if (task.trim() !== '' && description.trim() !== '' && date && time) {
       const taskItem = {
         task: task,
         description: description,
-        date: date,
-        time: time,
+        date: editedTask.date === date ? date : date.toDateString(),
+        time: editedTask.time === time ? time : time.toTimeString(),
       };
       tasksCtx.updateTask(id, taskItem);
       tasksCtx.setFetchedTasks();
-      navigation.navigate('Tasks');
+      navigation.goBack();
     } else {
       Alert.alert('Oops', 'Please fill out all fields');
     }

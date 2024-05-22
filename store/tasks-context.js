@@ -23,7 +23,7 @@ export const TasksContext = createContext({
 export default function TasksContextProvider({ children }) {
   const [tasks, setTasks] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [appTheme, setAppTheme] = useState('dark')
+  const [appTheme, setAppTheme] = useState('dark');
 
   const authCtx = useContext(AuthContext);
 
@@ -55,11 +55,22 @@ export default function TasksContextProvider({ children }) {
   async function setFetchedTasks() {
     try {
       setIsFetching(true);
-      const fetchedTasks = await fetchTasks(authCtx.token, authCtx.userId);
-      setTasks(fetchedTasks);
-      setIsFetching(false);
+      if (authCtx.token !== null) {
+        const fetchedTasks = await fetchTasks(authCtx.token, authCtx.userId);
+        setTasks(fetchedTasks);
+        setIsFetching(false);
+      } else {
+        setTimeout(async () => {
+          const fetchedTasks = await fetchTasks(authCtx.token, authCtx.userId);
+          setTasks(fetchedTasks);
+          setIsFetching(false);
+        }, 3000);
+      }
     } catch (error) {
-      Alert.alert('Error', "Could not fetch tasks")
+      Alert.alert('Error', 'Could not fetch tasks');
+      console.log(error);
+      console.log(authCtx.token);
+      // authCtx.logout();
       setIsFetching(false);
     }
   }
@@ -113,15 +124,14 @@ export default function TasksContextProvider({ children }) {
     }
   }
 
-  function setTheme(theme){
-    setAppTheme(theme)
+  function setTheme(theme) {
+    setAppTheme(theme);
   }
 
- 
   const value = {
     tasks: tasks,
     isFetching,
-    theme: appTheme, 
+    theme: appTheme,
     setTheme,
     addTask,
     setFetchedTasks,

@@ -138,7 +138,7 @@ function TasksStack() {
       <Stack.Screen
         name="EditTask"
         component={EditTask}
-        options={{ title: 'Edit Task' }}
+        options={{ title: 'Task' }}
       />
     </Stack.Navigator>
   );
